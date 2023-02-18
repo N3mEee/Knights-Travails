@@ -11,7 +11,7 @@ function createGameBoard() {
     return board;
 }
 const gameBoard = createGameBoard();
-// Treat all possible moves the knight could make as children in a tree. Don’t allow any moves to go off the board.
+
 const knightSteps = [
     [1, 2],
     [2, 1],
@@ -57,12 +57,40 @@ function knightMoves(start, finish) {
 function printMoves(currentMove) {
     let moveList = [];
     while (currentMove !== null) {
+        const square = document.querySelector(`.square-${currentMove.x}-${currentMove.y}`);
+        square.classList.add("path");
+        square.textContent = currentMove.dis;
         moveList.unshift(`[${currentMove.x},${currentMove.y}]`);
         currentMove = currentMove.previous;
     }
     return moveList;
 }
+function generateGameBoard() {
+    const board = document.createElement("div");
+    board.id = "board";
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            const cell = document.createElement("div");
+            cell.classList.add("square");
+            cell.classList.add(`square-${i}-${j}`);
+            board.appendChild(cell);
+        }
+    }
+    return board;
+}
+document.body.appendChild(generateGameBoard());
 
-console.log(knightMoves([0, 0], [1, 2])); // You made it in 1 moves! Here's your path: [0,0],[1,2]
-console.log(knightMoves([0, 0], [3, 3])); // You made it in 2 moves! Here's your path: [0,0],[1,2],[3,3]
-console.log(knightMoves([3, 3], [0, 0])); // You made it in 2 moves! Here's your path: [3,3],[2,1],[0,0]
+const form = document.querySelector("form");
+const result = document.querySelector("#result");
+
+form.addEventListener("submit", (event) => {
+    document.body.removeChild(board);
+    document.body.appendChild(generateGameBoard());
+    event.preventDefault();
+    const startInput = document.querySelector("#start");
+    const endInput = document.querySelector("#end");
+    const start = startInput.value.split(",").map((coord) => parseInt(coord.trim(), 10));
+    const end = endInput.value.split(",").map((coord) => parseInt(coord.trim(), 10));
+    const shortestPath = knightMoves(start, end);
+    result.textContent = shortestPath;
+});

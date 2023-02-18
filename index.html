@@ -3,12 +3,20 @@
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script type="module" src="./index.js" defer></script>
+        <link rel="stylesheet" href="style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
     </head>
     <body>
-        <script type="module" src="./Queue.js"></script>
-        <script type="module" src="./Cell.js"></script>
-        <script type="module" src="./index.js"></script>
+        <h1>Knight's Shortest Path</h1>
+        <form>
+            <label for="start">Starting position:</label>
+            <input type="text" id="start" name="start" pattern="[0-7],[0-7]" placeholder="0,0" required />
+            <label for="end">Ending position:</label>
+            <input type="text" id="end" name="end" pattern="[0-7],[0-7]" placeholder="7,7" required />
+            <button type="submit">Find Shortest Path</button>
+        </form>
+        <div id="result"></div>
     </body>
 </html>
